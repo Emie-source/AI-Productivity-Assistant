@@ -8,9 +8,11 @@ import {
   Crown,
   Lightbulb,
   MessageSquare,
+  Receipt,
   Sparkles,
   Square,
 } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { MessageContent } from "@/components/blade-queens/MessageContent";
