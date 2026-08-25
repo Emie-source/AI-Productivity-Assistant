@@ -46,9 +46,11 @@ export const Route = createFileRoute("/")({
 const MODES: { id: AssistantMode; icon: typeof Crown }[] = [
   { id: "chat", icon: MessageSquare },
   { id: "communication", icon: Sparkles },
+  { id: "pricing", icon: Receipt },
   { id: "planner", icon: CalendarClock },
   { id: "research", icon: Lightbulb },
 ];
+
 
 function Index() {
   const [mode, setMode] = useState<AssistantMode>("chat");
