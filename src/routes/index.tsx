@@ -8,9 +8,11 @@ import {
   Crown,
   Lightbulb,
   MessageSquare,
+  Receipt,
   Sparkles,
   Square,
 } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { MessageContent } from "@/components/blade-queens/MessageContent";
@@ -44,9 +46,11 @@ export const Route = createFileRoute("/")({
 const MODES: { id: AssistantMode; icon: typeof Crown }[] = [
   { id: "chat", icon: MessageSquare },
   { id: "communication", icon: Sparkles },
+  { id: "pricing", icon: Receipt },
   { id: "planner", icon: CalendarClock },
   { id: "research", icon: Lightbulb },
 ];
+
 
 function Index() {
   const [mode, setMode] = useState<AssistantMode>("chat");
@@ -114,7 +118,7 @@ function Index() {
           </div>
         </header>
 
-        <nav className="mt-5 grid grid-cols-2 gap-2 md:grid-cols-4">
+        <nav className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
           {MODES.map(({ id, icon: Icon }) => (
             <button
               key={id}
