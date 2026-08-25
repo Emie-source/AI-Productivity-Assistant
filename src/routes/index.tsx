@@ -118,7 +118,7 @@ function Index() {
           </div>
         </header>
 
-        <nav className="mt-5 grid grid-cols-2 gap-2 md:grid-cols-4">
+        <nav className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
           {MODES.map(({ id, icon: Icon }) => (
             <button
               key={id}
