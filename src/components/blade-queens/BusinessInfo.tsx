@@ -1,17 +1,8 @@
+import { Link } from "@tanstack/react-router";
 import { Clock, GraduationCap, MapPin, Phone, Scissors } from "lucide-react";
 
-type Service = { name: string; detail: string; price: string };
+import { SERVICES } from "@/lib/blade-queens-services";
 
-const SERVICES: Service[] = [
-  { name: "Queens Cut", detail: "Classic scissor & clipper cut with styling", price: "R150" },
-  { name: "Skin Fade", detail: "Precision fade, razor-finished edges", price: "R180" },
-  { name: "Beard Trim & Shape", detail: "Line-up, trim and beard oil finish", price: "R80" },
-  { name: "Hot Towel Shave", detail: "Traditional straight-razor shave", price: "R160" },
-  { name: "Cut & Beard Combo", detail: "Queens Cut plus full beard sculpt", price: "R210" },
-  { name: "Kids Cut (under 12)", detail: "Gentle, quick cut for young clients", price: "R100" },
-  { name: "Head Shave", detail: "Full razor head shave with aftercare", price: "R130" },
-  { name: "Line-Up / Edge-Up", detail: "Sharp hairline clean-up", price: "R60" },
-];
 
 const HOURS = [
   { day: "Monday – Friday", time: "08:30 – 18:00" },
