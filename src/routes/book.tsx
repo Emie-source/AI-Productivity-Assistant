@@ -15,12 +15,13 @@ import {
 import crest from "@/assets/blade-queens-crest.png";
 import { cn } from "@/lib/utils";
 
-type BookSearch = { service?: string };
+type BookSearch = { service?: string | undefined };
 
 export const Route = createFileRoute("/book")({
   validateSearch: (search: Record<string, unknown>): BookSearch => ({
-    service: typeof search.service === "string" ? search.service : undefined,
+    service: typeof search["service"] === "string" ? (search["service"] as string) : undefined,
   }),
+
   head: () => ({
     meta: [
       { title: "Book an Appointment | Blade Queens Barbershop" },
