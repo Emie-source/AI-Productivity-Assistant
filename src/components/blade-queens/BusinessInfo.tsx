@@ -1,7 +1,24 @@
+import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Clock, GraduationCap, MapPin, Phone, Scissors } from "lucide-react";
+import {
+  Check,
+  Clock,
+  GraduationCap,
+  Info,
+  MapPin,
+  Phone,
+  Scissors,
+} from "lucide-react";
 
-import { SERVICES } from "@/lib/blade-queens-services";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { SERVICES, type Service, formatRand } from "@/lib/blade-queens-services";
 
 
 const HOURS = [
@@ -12,6 +29,8 @@ const HOURS = [
 ];
 
 export function BusinessInfo() {
+  const [active, setActive] = useState<Service | null>(null);
+
   return (
     <div className="mt-6 flex flex-col gap-4">
       <section
@@ -49,7 +68,7 @@ export function BusinessInfo() {
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <Scissors className="h-5 w-5 text-primary" />
-            <h2 className="text-lg text-foreground md:text-xl">Services &amp; Prices</h2>
+            <h2 className="text-lg text-foreground md:text-xl">Services & Prices</h2>
           </div>
           <Link
             to="/book"
@@ -61,10 +80,10 @@ export function BusinessInfo() {
         <ul className="mt-4 grid gap-2 sm:grid-cols-2">
           {SERVICES.map((s) => (
             <li key={s.slug}>
-              <Link
-                to="/book"
-                search={{ service: s.slug }}
-                className="flex items-start justify-between gap-3 rounded-xl border border-border bg-secondary/40 px-4 py-3 transition-colors hover:border-primary/50 hover:bg-secondary/60"
+              <button
+                type="button"
+                onClick={() => setActive(s)}
+                className="flex w-full items-start justify-between gap-3 rounded-xl border border-border bg-secondary/40 px-4 py-3 text-left transition-colors hover:border-primary/50 hover:bg-secondary/60"
               >
                 <span>
                   <span className="block text-sm font-semibold text-foreground">
@@ -74,11 +93,11 @@ export function BusinessInfo() {
                     {s.detail}
                   </span>
                   <span className="mt-1 flex items-center gap-1 text-[11px] text-muted-foreground">
-                    <Clock className="h-3 w-3" /> {s.duration} · Book now
+                    <Clock className="h-3 w-3" /> {s.duration} · Tap for details
                   </span>
                 </span>
                 <span className="shrink-0 text-sm font-bold text-primary">{s.price}</span>
-              </Link>
+              </button>
             </li>
           ))}
         </ul>
@@ -114,12 +133,12 @@ export function BusinessInfo() {
         >
           <div className="flex items-center gap-2">
             <MapPin className="h-5 w-5 text-primary" />
-            <h2 className="text-lg text-foreground">Visit &amp; Contact</h2>
+            <h2 className="text-lg text-foreground">Visit & Contact</h2>
           </div>
           <address className="mt-4 flex flex-col gap-3 text-sm not-italic text-muted-foreground">
             <span className="flex items-start gap-2">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-              Blade Queens Barbershop, Johannesburg, South Africa
+              Blade Queens Barbershop, Cape Town, South Africa
             </span>
             <span className="flex items-start gap-2">
               <Phone className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
@@ -143,6 +162,68 @@ export function BusinessInfo() {
           clipper hold to building a career behind the chair.
         </p>
       </section>
+
+      <Dialog open={Boolean(active)} onOpenChange={(o) => !o && setActive(null)}>
+        <DialogContent className="max-w-md border-border bg-card text-foreground">
+          {active && (
+            <>
+              <DialogHeader>
+                <DialogTitle className="flex items-center gap-2 text-gold-gradient">
+                  <Info className="h-4 w-4 text-primary" />
+                  {active.name}
+                </DialogTitle>
+                <DialogDescription className="sr-only">
+                  Service details for {active.name}
+                </DialogDescription>
+              </DialogHeader>
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-wrap items-center gap-2 text-xs">
+                  <span className="rounded-full border border-primary/30 bg-primary/10 px-3 py-1 font-semibold text-primary">
+                    {active.price}
+                  </span>
+                  <span className="flex items-center gap-1 text-muted-foreground">
+                    <Clock className="h-3 w-3" /> {active.duration}
+                  </span>
+                </div>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  {active.fullDescription}
+                </p>
+                <div>
+                  <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                    What's included
+                  </h3>
+                  <ul className="mt-2 grid gap-1.5">
+                    {active.includes.map((item) => (
+                      <li
+                        key={item}
+                        className="flex items-start gap-2 text-sm text-foreground"
+                      >
+                        <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="flex flex-wrap gap-2 pt-1">
+                  <Button asChild size="sm" className="flex-1">
+                    <Link to="/book" search={{ service: active.slug }}>
+                      Book this · {formatRand(active.priceValue)}
+                    </Link>
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    size="sm"
+                    onClick={() => setActive(null)}
+                  >
+                    Close
+                  </Button>
+                </div>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
