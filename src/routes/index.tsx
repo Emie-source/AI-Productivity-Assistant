@@ -16,6 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { MessageContent } from "@/components/blade-queens/MessageContent";
+import { BusinessInfo } from "@/components/blade-queens/BusinessInfo";
 import { MODE_META, type AssistantMode } from "@/lib/blade-queens-prompts";
 import crest from "@/assets/blade-queens-crest.png";
 import { cn } from "@/lib/utils";
