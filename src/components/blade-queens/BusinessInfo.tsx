@@ -1,17 +1,8 @@
+import { Link } from "@tanstack/react-router";
 import { Clock, GraduationCap, MapPin, Phone, Scissors } from "lucide-react";
 
-type Service = { name: string; detail: string; price: string };
+import { SERVICES } from "@/lib/blade-queens-services";
 
-const SERVICES: Service[] = [
-  { name: "Queens Cut", detail: "Classic scissor & clipper cut with styling", price: "R150" },
-  { name: "Skin Fade", detail: "Precision fade, razor-finished edges", price: "R180" },
-  { name: "Beard Trim & Shape", detail: "Line-up, trim and beard oil finish", price: "R80" },
-  { name: "Hot Towel Shave", detail: "Traditional straight-razor shave", price: "R160" },
-  { name: "Cut & Beard Combo", detail: "Queens Cut plus full beard sculpt", price: "R210" },
-  { name: "Kids Cut (under 12)", detail: "Gentle, quick cut for young clients", price: "R100" },
-  { name: "Head Shave", detail: "Full razor head shave with aftercare", price: "R130" },
-  { name: "Line-Up / Edge-Up", detail: "Sharp hairline clean-up", price: "R60" },
-];
 
 const HOURS = [
   { day: "Monday – Friday", time: "08:30 – 18:00" },
@@ -55,21 +46,39 @@ export function BusinessInfo() {
         id="services"
         className="rounded-2xl border border-border bg-card/45 p-5 shadow-blade md:p-6"
       >
-        <div className="flex items-center gap-2">
-          <Scissors className="h-5 w-5 text-primary" />
-          <h2 className="text-lg text-foreground md:text-xl">Services &amp; Prices</h2>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <Scissors className="h-5 w-5 text-primary" />
+            <h2 className="text-lg text-foreground md:text-xl">Services &amp; Prices</h2>
+          </div>
+          <Link
+            to="/book"
+            className="rounded-full border border-primary/50 bg-primary/15 px-4 py-1.5 text-xs font-semibold text-primary transition-colors hover:bg-primary/25"
+          >
+            Book an appointment
+          </Link>
         </div>
         <ul className="mt-4 grid gap-2 sm:grid-cols-2">
           {SERVICES.map((s) => (
-            <li
-              key={s.name}
-              className="flex items-start justify-between gap-3 rounded-xl border border-border bg-secondary/40 px-4 py-3"
-            >
-              <div>
-                <p className="text-sm font-semibold text-foreground">{s.name}</p>
-                <p className="mt-0.5 text-xs text-muted-foreground">{s.detail}</p>
-              </div>
-              <span className="shrink-0 text-sm font-bold text-primary">{s.price}</span>
+            <li key={s.slug}>
+              <Link
+                to="/book"
+                search={{ service: s.slug }}
+                className="flex items-start justify-between gap-3 rounded-xl border border-border bg-secondary/40 px-4 py-3 transition-colors hover:border-primary/50 hover:bg-secondary/60"
+              >
+                <span>
+                  <span className="block text-sm font-semibold text-foreground">
+                    {s.name}
+                  </span>
+                  <span className="mt-0.5 block text-xs text-muted-foreground">
+                    {s.detail}
+                  </span>
+                  <span className="mt-1 flex items-center gap-1 text-[11px] text-muted-foreground">
+                    <Clock className="h-3 w-3" /> {s.duration} · Book now
+                  </span>
+                </span>
+                <span className="shrink-0 text-sm font-bold text-primary">{s.price}</span>
+              </Link>
             </li>
           ))}
         </ul>
@@ -77,6 +86,7 @@ export function BusinessInfo() {
           Prices are indicative starting rates and may vary with hair length and
           service time. Confirm on booking.
         </p>
+
       </section>
 
       <div className="grid gap-4 md:grid-cols-2">
