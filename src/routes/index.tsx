@@ -16,6 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { MessageContent } from "@/components/blade-queens/MessageContent";
+import { BusinessInfo } from "@/components/blade-queens/BusinessInfo";
 import { MODE_META, type AssistantMode } from "@/lib/blade-queens-prompts";
 import crest from "@/assets/blade-queens-crest.png";
 import { cn } from "@/lib/utils";
@@ -118,6 +119,8 @@ function Index() {
           </div>
         </header>
 
+        <BusinessInfo />
+
         <nav className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
           {MODES.map(({ id, icon: Icon }) => (
             <button
@@ -140,7 +143,7 @@ function Index() {
 
         <section
           ref={scrollRef}
-          className="mt-4 flex-1 overflow-y-auto rounded-2xl border border-border bg-card/45 p-4 shadow-blade md:p-6"
+          className="mt-4 min-h-[420px] flex-1 overflow-y-auto rounded-2xl border border-border bg-card/45 p-4 shadow-blade md:p-6"
         >
           {messages.length === 0 ? (
             <div className="flex h-full flex-col justify-center gap-5 py-8">
